@@ -23,13 +23,11 @@ namespace SlutProj2020
             //Kallar metoden för startmenyn
             StartMenu();
 
+            QueueFighters();
+            Console.WriteLine(NextFighterA);
 
+            Console.WriteLine(NextFighterB);
 
-
-            Boxer newFighter = new Boxer();
-            TeamA.Add(newFighter);
-
-            NextFighterA.Enqueue(TeamA[0]);
 
             Console.ReadLine();
         }
@@ -43,15 +41,55 @@ namespace SlutProj2020
             int x = CheckAnswer(10);
 
             //For Loop som genererar det önskade antalet fighters av olika sorter.
-            for (int i = 0; i < x; i++)
+            for (int t = 0; t < 2; t++)
             {
-                //Kallar metoden chooseFighter som skriver ut instruktioner till användaren.
-                chooseFighter();
-                //Kallar metoden CheckAnswer med parametern maxAmount = 4.
-                CheckAnswer(4);
+                for (int i = 0; i < x; i++)
+                {
+                    Console.WriteLine("Team " + t);
+                    //Skriver ut vilken fighter som ska väljas
+                    Console.WriteLine("Fighter " + (i + 1));
+                    //Kallar metoden chooseFighter som skriver ut instruktioner till användaren.
+                    chooseFighter();
+                    //Kallar metoden CheckAnswer med parametern maxAmount = 4.
+                    int ans = 1 + CheckAnswer(4);
+                    if (ans == 1)
+                    {
+                        Boxer newFighter = new Boxer();
+                        AddFighterToTeam(newFighter, t);
+                    }
+                    else if (ans == 2)
+                    {
+                        MuayThai newFighter = new MuayThai();
+                        AddFighterToTeam(newFighter, t);
+                    }
+                    else if (ans == 3)
+                    {
+                        Wrestler newFighter = new Wrestler();
+                        AddFighterToTeam(newFighter, t);
+                    }
+                    else if (ans == 4)
+                    {
+                        BJJ newFighter = new BJJ();
+                        AddFighterToTeam(newFighter, t);
+                    }
+                    //Lägger till newFighter till det rätta laget.
+                    if (t == 0)
+                    {
+                        
+                    }
+                }        
+            }
+        }
 
-                Boxer newFighter = new Boxer();
-                TeamA.Add(newFighter);
+        static void AddFighterToTeam(Fighter fighter, int team)
+        {
+            if(team == 0)
+            {
+                TeamA.Add(fighter);
+            }
+            else
+            {
+                TeamB.Add(fighter);
             }
         }
 
@@ -74,7 +112,7 @@ namespace SlutProj2020
             //Kollar om svaret går att tryparsa.
             bool succes = int.TryParse(ans, out int output);
             //Kollar om succes är true och om output är över maxAmount.
-            while (succes != true || output < 0 || output >= maxAmount)
+            while (succes != true || output < 0 || output > maxAmount)
             { 
                 //Ger ett felmedelande
                 Console.WriteLine("Thats not a valid answer.");
@@ -82,8 +120,22 @@ namespace SlutProj2020
                 //Kollar om svaret går att tryparsa.
                 succes = int.TryParse(ans, out output);
             }
+            Console.Clear();
             //Returnar output
             return (output);
+        }
+
+        //Metod för att köa alla fighters i korrekt kö.
+        static void QueueFighters()
+        {
+            //For loop som körs för varje fighter. Eftersom att båda lagen har lika många fighters krävs bara en loop.
+            for (int i = 0; i < TeamA.Count; i++)
+            {
+                //Köar lag A
+                NextFighterA.Enqueue(TeamA[i]);
+                //Köar lag B
+                NextFighterB.Enqueue(TeamB[i]);
+            }
         }
 
         static void Fight()
