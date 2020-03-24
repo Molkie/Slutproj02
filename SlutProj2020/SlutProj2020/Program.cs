@@ -28,7 +28,7 @@ namespace SlutProj2020
 
             Console.WriteLine(NextFighterB);
 
-
+            
             Console.ReadLine();
         }
 
