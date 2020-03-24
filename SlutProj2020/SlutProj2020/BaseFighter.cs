@@ -11,33 +11,28 @@ namespace SlutProj2020
         //Namn
         protected string name;
         //Hälsa
-        protected int hp;
+        public int hp = 10;
         //Level
         protected int lvl;
         //Power, kraft
-        protected int pwr;
+        protected int pwr = 1;
         //Defense, försvar
         protected int dfn;
         //Typ
         protected int type;
 
         //Metod för fighterns specialattack
-        protected virtual int Special()
+        public virtual int Special()
         {
             Console.WriteLine("Special Attack!");
-            return (pwr * 5);
+            return (pwr * 2);
         }
 
         //Metod för att fightern ska ta skada. Använder int damage som parameter
-        void TakeDamage(int damage)
+        public void TakeDamage(int damage)
         {
             //Tar fighterns hp minus parametern damage
-            hp -= damage;
-            //Kollar om hp är under eller lika med 0, om true kallas metoden Death();
-            if(damage <= 0)
-            {
-                Death();
-            }
+            hp = hp - damage;
         }
 
         //Metod för att levla upp
@@ -47,7 +42,7 @@ namespace SlutProj2020
         }
 
         //Metod för att sätta fighterns namn
-        void SetName(string input)
+        public void SetName(string input)
         {
             name = input;
         }

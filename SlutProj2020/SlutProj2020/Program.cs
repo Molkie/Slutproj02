@@ -22,11 +22,10 @@ namespace SlutProj2020
         {
             //Kallar metoden för startmenyn
             StartMenu();
-
+            //Köar alla fighters
             QueueFighters();
-            Console.WriteLine(NextFighterA);
-
-            Console.WriteLine(NextFighterB);
+            //Kallar på metoden för fight så länge som det finns fighters vid liv
+            Fight();
 
             
             Console.ReadLine();
@@ -72,11 +71,6 @@ namespace SlutProj2020
                         BJJ newFighter = new BJJ();
                         AddFighterToTeam(newFighter, t);
                     }
-                    //Lägger till newFighter till det rätta laget.
-                    if (t == 0)
-                    {
-                        
-                    }
                 }        
             }
         }
@@ -87,7 +81,7 @@ namespace SlutProj2020
             {
                 TeamA.Add(fighter);
             }
-            else
+            else if(team == 1)
             {
                 TeamB.Add(fighter);
             }
@@ -128,19 +122,36 @@ namespace SlutProj2020
         //Metod för att köa alla fighters i korrekt kö.
         static void QueueFighters()
         {
-            //For loop som körs för varje fighter. Eftersom att båda lagen har lika många fighters krävs bara en loop.
+            //For loop som körs för varje fighter.
+            //Lag A
             for (int i = 0; i < TeamA.Count; i++)
             {
                 //Köar lag A
                 NextFighterA.Enqueue(TeamA[i]);
+
+            }
+            //Lag B
+            for (int j = 0; j < TeamB.Count; j++)
+            {
                 //Köar lag B
-                NextFighterB.Enqueue(TeamB[i]);
+                NextFighterB.Enqueue(TeamB[j]);
             }
         }
 
         static void Fight()
         {
+            Fighter fighter1 = NextFighterA.Dequeue();
+            Fighter fighter2 = NextFighterB.Dequeue();
 
+            while(fighter1.hp > 1 && fighter2.hp > 1)
+            {
+                //Fighters attackerar varandra
+                fighter1.TakeDamage(fighter2.Special());
+                fighter2.TakeDamage(fighter1.Special());
+                Console.WriteLine(fighter2 + " attacks " + fighter1 + " for " + fighter2.Special() + "damage!" + fighter1 + " has " + fighter1.hp + "hp!");
+                Console.WriteLine(fighter1 + " attacks " + fighter2 + " for " + fighter1.Special() + "damage!" + fighter2 + " has " + fighter2.hp + "hp!");
+                Console.ReadLine();
+            }
         }
     }
 }
