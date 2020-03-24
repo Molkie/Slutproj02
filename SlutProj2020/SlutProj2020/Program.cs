@@ -138,8 +138,10 @@ namespace SlutProj2020
             }
         }
 
+        //Metod för själva fighterna
         static void Fight()
         {
+            //Skapar två instanser av klassen fighter och definerar dessa som den fighter först i kön i vardera lag.
             Fighter fighter1 = NextFighterA.Dequeue();
             Fighter fighter2 = NextFighterB.Dequeue();
 
@@ -152,6 +154,20 @@ namespace SlutProj2020
                 Console.WriteLine(fighter1 + " attacks " + fighter2 + " for " + fighter1.Special() + "damage!" + fighter2 + " has " + fighter2.hp + "hp!");
                 Console.ReadLine();
             }
+            //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
+            if(fighter1.hp < 1)
+            {
+                Console.WriteLine(fighter1 + " has died!");
+                NextFighterB.Enqueue(fighter2);
+            }
+            //Om fighter2 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter1 tillbaka längst bak i kön.
+            if (fighter2.hp < 1)
+            {
+                Console.WriteLine(fighter2 + " has died!");
+                NextFighterB.Enqueue(fighter1);
+            }
+            //Returnar
+            return;
         }
     }
 }
