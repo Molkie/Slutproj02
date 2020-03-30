@@ -50,22 +50,27 @@ namespace SlutProj2020
                     //Kallar metoden chooseFighter som skriver ut instruktioner till användaren.
                     chooseFighter();
                     //Kallar metoden CheckAnswer med parametern maxAmount = 4.
-                    int ans = 1 + CheckAnswer(4);
+                    int ans = CheckAnswer(4);
+                    //Kollar vilket svar användaren skrev och lägger till en typ av fighter som motsvarar den siffran.
+                    //Svaret 1. Lägger till en boxare.
                     if (ans == 1)
                     {
                         Boxer newFighter = new Boxer();
                         AddFighterToTeam(newFighter, t);
                     }
+                    //Svaret 2. Lägger till en Thaiboxare.
                     else if (ans == 2)
                     {
                         MuayThai newFighter = new MuayThai();
                         AddFighterToTeam(newFighter, t);
                     }
+                    //Svaret 3. Lägger till en brottare.
                     else if (ans == 3)
                     {
                         Wrestler newFighter = new Wrestler();
                         AddFighterToTeam(newFighter, t);
                     }
+                    //Svaret 4. Lägger till en BJJ utövare.
                     else if (ans == 4)
                     {
                         BJJ newFighter = new BJJ();
@@ -75,8 +80,10 @@ namespace SlutProj2020
             }
         }
 
+        //Metod vars syfte är att lägga till fighters i rätt lag. Har fighter och team som parametrar.
         static void AddFighterToTeam(Fighter fighter, int team)
         {
+            //Kollar vilket lag fighern ska vara och lägger till den i rätt lag (team 0 = teamA, team 1 == teamB)
             if(team == 0)
             {
                 TeamA.Add(fighter);
@@ -87,6 +94,7 @@ namespace SlutProj2020
             }
         }
 
+        //Metod som skriver ut vilka typer av fighters man kan välja mellan
         static void chooseFighter()
         {
             Console.WriteLine("What type of fighter do you want?");

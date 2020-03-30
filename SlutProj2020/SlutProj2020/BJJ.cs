@@ -8,5 +8,12 @@ namespace SlutProj2020
 {
     class BJJ : Grappler
     {
+        //public override för metoden Special. Här är fighterns specialattack
+        public override int Special()
+        {
+            Console.WriteLine("Special Attack!");
+            hp++;
+            return (pwr * 2);
+        }
     }
 }
