@@ -8,10 +8,20 @@ namespace SlutProj2020
 {
     class BJJ : Grappler
     {
+        //Konstruktor för BJJ subklassen
+        public BJJ()
+        {
+            //Sätter ett namn
+            name = "Gordon";
+            //Sätter ett värde på pwr
+            pwr = 2;
+            //Sätter ett värde på hp
+            hp = 20;
+        }
+
         //public override för metoden Special. Här är fighterns specialattack
         public override int Special()
         {
-            Console.WriteLine("Special Attack!");
             hp++;
             return (pwr * 2);
         }

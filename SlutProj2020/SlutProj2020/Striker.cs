@@ -8,11 +8,6 @@ namespace SlutProj2020
 {
     class Striker : Fighter
     {
-        //public override för metoden Special. Här är fighterns specialattack
-        public override int Special()
-        {
-            Console.WriteLine("Special Attack!");
-            return (pwr * 3);
-        }
+
     }
 }

@@ -26,8 +26,7 @@ namespace SlutProj2020
             QueueFighters();
             //Kallar på metoden för fight så länge som det finns fighters vid liv
             Fight();
-
-            
+           
             Console.ReadLine();
         }
 
@@ -44,7 +43,7 @@ namespace SlutProj2020
             {
                 for (int i = 0; i < x; i++)
                 {
-                    Console.WriteLine("Team " + t);
+                    Console.WriteLine("Team " + (1 + t));
                     //Skriver ut vilken fighter som ska väljas
                     Console.WriteLine("Fighter " + (i + 1));
                     //Kallar metoden chooseFighter som skriver ut instruktioner till användaren.
@@ -149,33 +148,59 @@ namespace SlutProj2020
         //Metod för själva fighterna
         static void Fight()
         {
-            //Skapar två instanser av klassen fighter och definerar dessa som den fighter först i kön i vardera lag.
-            Fighter fighter1 = NextFighterA.Dequeue();
-            Fighter fighter2 = NextFighterB.Dequeue();
+            //Loopen körs så länge det finns fighters i båda lagen
+            while (NextFighterB.Count != 0 && NextFighterA.Count != 0)
+            {
+                //Variabel för vilken runda som är aktuell
+                int round = 1;
+                //Skapar två instanser av klassen fighter och definerar dessa som den fighter först i kön i vardera lag.
+                Fighter fighter1 = NextFighterA.Dequeue();
+                Fighter fighter2 = NextFighterB.Dequeue();
 
-            while(fighter1.hp > 1 && fighter2.hp > 1)
-            {
-                //Fighters attackerar varandra
-                fighter1.TakeDamage(fighter2.Special());
-                fighter2.TakeDamage(fighter1.Special());
-                Console.WriteLine(fighter2 + " attacks " + fighter1 + " for " + fighter2.Special() + "damage!" + fighter1 + " has " + fighter1.hp + "hp!");
-                Console.WriteLine(fighter1 + " attacks " + fighter2 + " for " + fighter1.Special() + "damage!" + fighter2 + " has " + fighter2.hp + "hp!");
-                Console.ReadLine();
+                while (fighter1.hp > 1 && fighter2.hp > 1)
+                {
+                    //Skriver ut vilken runda det är och vilka fighters som slåss
+                    Console.WriteLine(fighter1.name + " vs " + fighter2.name);
+                    Console.WriteLine("Round: " + round);
+                    //Fighters attackerar varandra genom att kalla metoden TakeDamage med parametern från fighterns specialattack
+                    fighter1.TakeDamage(fighter2.Special());
+                    fighter2.TakeDamage(fighter1.Special());
+                    //Skriver ut skadan så att användaren vet vad som händer
+                    Console.WriteLine(fighter2.name + " attacks " + fighter1.name + " for " + fighter2.Special() + " damage!" + fighter1.name + " has " + fighter1.hp + " hp!");
+                    Console.WriteLine(fighter1.name + " attacks " + fighter2.name + " for " + fighter1.Special() + " damage!" + fighter2.name + " has " + fighter2.hp + " hp!");
+
+                    //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
+                    if (fighter1.hp < 1)
+                    {
+                        Console.WriteLine(fighter1.name + " has died!");
+                        NextFighterB.Enqueue(fighter2);
+                    }
+                    //Om fighter2 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter1 tillbaka längst bak i kön.
+                    if (fighter2.hp < 1)
+                    {
+                        Console.WriteLine(fighter2.name + " has died!");
+                        NextFighterA.Enqueue(fighter1);
+                    }
+                    //Lägger till ett på variabeln round.
+                    round++;
+                    //Städar upp konsollen
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+                //När någon av lagen får slut på fighters kollar denna algoritm vilket lag som van
+                if (NextFighterA.Count == 0 && NextFighterB.Count == 0)
+                {
+                    Console.WriteLine("No one wins! Say no to fighting!");
+                }
+                if (NextFighterA.Count == 0 && NextFighterB.Count > 0)
+                {
+                    Console.WriteLine("Team B wins!");
+                }
+                if(NextFighterB.Count == 0 && NextFighterA.Count > 0)
+                {
+                    Console.WriteLine("Team A wins!");
+                }
             }
-            //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
-            if(fighter1.hp < 1)
-            {
-                Console.WriteLine(fighter1 + " has died!");
-                NextFighterB.Enqueue(fighter2);
-            }
-            //Om fighter2 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter1 tillbaka längst bak i kön.
-            if (fighter2.hp < 1)
-            {
-                Console.WriteLine(fighter2 + " has died!");
-                NextFighterB.Enqueue(fighter1);
-            }
-            //Returnar
-            return;
         }
     }
 }

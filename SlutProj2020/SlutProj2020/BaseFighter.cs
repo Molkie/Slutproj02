@@ -9,7 +9,7 @@ namespace SlutProj2020
     class Fighter
     {
         //Namn
-        protected string name;
+        public string name;
         //Hälsa
         public int hp = 10;
         //Level
@@ -24,8 +24,7 @@ namespace SlutProj2020
         //Metod för fighterns specialattack
         public virtual int Special()
         {
-            Console.WriteLine("Special Attack!");
-            return (pwr * 2);
+            return (pwr);
         }
 
         //Metod för att fightern ska ta skada. Använder int damage som parameter
