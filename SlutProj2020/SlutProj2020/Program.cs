@@ -16,6 +16,8 @@ namespace SlutProj2020
         static Queue<Fighter> NextFighterA = new Queue<Fighter>();
         //Kö för lag B
         static Queue<Fighter> NextFighterB = new Queue<Fighter>();
+        //Stack som fungerar som "graveyard" där alla döda fighters läggs på varandra
+        static Stack<Fighter> graveyard = new Stack<Fighter>();
 
         //Main Metod
         static void Main(string[] args)
@@ -26,7 +28,7 @@ namespace SlutProj2020
             QueueFighters();
             //Kallar på metoden för fight så länge som det finns fighters vid liv
             Fight();
-           
+            //Hindrar programet från att avslutas abrupt
             Console.ReadLine();
         }
 
@@ -172,16 +174,30 @@ namespace SlutProj2020
                     Console.WriteLine(fighter1.name + " attacks " + fighter2.name + " for " + fighter1.Special() + " damage!" + fighter2.name + " has " + fighter2.hp + " hp!");
 
                     //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
-                    if (fighter1.hp < 1)
+                    if (fighter1.hp < 1 && fighter2.hp > 0)
                     {
                         Console.WriteLine(fighter1.name + " has died!");
+                        //Lägger till den levande fightern (fighter2) längst bak i kön.
                         NextFighterB.Enqueue(fighter2);
+                        //Lägger till den dödade fightern (fighter1) i stack graveyard.
+                        graveyard.Push(fighter1);
                     }
                     //Om fighter2 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter1 tillbaka längst bak i kön.
-                    if (fighter2.hp < 1)
+                    else if (fighter2.hp < 1 && fighter1.hp > 0)
                     {
                         Console.WriteLine(fighter2.name + " has died!");
+                        //Lägger till den levande fightern (fighter1) längst bak i kön.
                         NextFighterA.Enqueue(fighter1);
+                        //Lägger till den dödade fightern (fighter2) i stack graveyard.
+                        graveyard.Push(fighter2);
+                    }
+                    //Om båda fighters dör läggs båda till i graveyard, men ingen hamnar längst bak i kön.
+                    else if(fighter1.hp < 1 && fighter2.hp < 1)
+                    {
+                        Console.WriteLine("Both fighters has died!");
+                        //Lägger till båda fighters i graveyard.
+                        graveyard.Push(fighter1);
+                        graveyard.Push(fighter2);
                     }
                     //Lägger till ett på variabeln round.
                     round++;
@@ -194,16 +210,22 @@ namespace SlutProj2020
                 if (NextFighterA.Count == 0 && NextFighterB.Count == 0)
                 {
                     Console.WriteLine("No one wins! Say no to fighting!");
+                    //INKAPSA DETTA SENARE
+                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
                 }
                 //Om LagA har slut på fighters, men lag B har fler än 0 vinner lag B
                 else if (NextFighterA.Count == 0 && NextFighterB.Count > 0)
                 {
                     Console.WriteLine("Team B wins!");
+                    //INKAPSA DETTA SENARE
+                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
                 }
                 //Om LagB har slut på fighters, men lag A har fler än 0 vinner lag B
                 else if (NextFighterB.Count == 0 && NextFighterA.Count > 0)
                 {
                     Console.WriteLine("Team A wins!");
+                    //INKAPSA DETTA SENARE
+                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
                 }
             }
         }
