@@ -39,10 +39,13 @@ namespace SlutProj2020
             int x = CheckAnswer(10);
 
             //For Loop som genererar det önskade antalet fighters av olika sorter.
+            //Körs för varge lag
             for (int t = 0; t < 2; t++)
             {
+                //Körs för varge fighter i laget
                 for (int i = 0; i < x; i++)
                 {
+                    //Skriver ut vilket lag som är aktuellt
                     Console.WriteLine("Team " + (1 + t));
                     //Skriver ut vilken fighter som ska väljas
                     Console.WriteLine("Fighter " + (i + 1));
@@ -135,7 +138,6 @@ namespace SlutProj2020
             {
                 //Köar lag A
                 NextFighterA.Enqueue(TeamA[i]);
-
             }
             //Lag B
             for (int j = 0; j < TeamB.Count; j++)
@@ -188,15 +190,18 @@ namespace SlutProj2020
                     Console.Clear();
                 }
                 //När någon av lagen får slut på fighters kollar denna algoritm vilket lag som van
+                //Om båda lagen har slut på fighters vinner ingen
                 if (NextFighterA.Count == 0 && NextFighterB.Count == 0)
                 {
                     Console.WriteLine("No one wins! Say no to fighting!");
                 }
-                if (NextFighterA.Count == 0 && NextFighterB.Count > 0)
+                //Om LagA har slut på fighters, men lag B har fler än 0 vinner lag B
+                else if (NextFighterA.Count == 0 && NextFighterB.Count > 0)
                 {
                     Console.WriteLine("Team B wins!");
                 }
-                if(NextFighterB.Count == 0 && NextFighterA.Count > 0)
+                //Om LagB har slut på fighters, men lag A har fler än 0 vinner lag B
+                else if (NextFighterB.Count == 0 && NextFighterA.Count > 0)
                 {
                     Console.WriteLine("Team A wins!");
                 }
