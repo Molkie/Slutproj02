@@ -170,8 +170,8 @@ namespace SlutProj2020
                     fighter1.TakeDamage(fighter2.Special());
                     fighter2.TakeDamage(fighter1.Special());
                     //Skriver ut skadan så att användaren vet vad som händer
-                    Console.WriteLine(fighter2.name + " attacks " + fighter1.name + " for " + fighter2.Special() + " damage!" + fighter1.name + " has " + fighter1.hp + " hp!");
-                    Console.WriteLine(fighter1.name + " attacks " + fighter2.name + " for " + fighter1.Special() + " damage!" + fighter2.name + " has " + fighter2.hp + " hp!");
+                    Console.WriteLine(fighter2.name + " attacks " + fighter1.name + " for " + fighter2.Special() + " damage! " + fighter1.name + " has " + fighter1.hp + " hp!");
+                    Console.WriteLine(fighter1.name + " attacks " + fighter2.name + " for " + fighter1.Special() + " damage! " + fighter2.name + " has " + fighter2.hp + " hp!");
 
                     //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
                     if (fighter1.hp < 1 && fighter2.hp > 0)
@@ -210,24 +210,31 @@ namespace SlutProj2020
                 if (NextFighterA.Count == 0 && NextFighterB.Count == 0)
                 {
                     Console.WriteLine("No one wins! Say no to fighting!");
-                    //INKAPSA DETTA SENARE
-                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
+                    //Kallar metoden graveyard
+                    Graveyard();
                 }
                 //Om LagA har slut på fighters, men lag B har fler än 0 vinner lag B
                 else if (NextFighterA.Count == 0 && NextFighterB.Count > 0)
                 {
                     Console.WriteLine("Team B wins!");
-                    //INKAPSA DETTA SENARE
-                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
+                    //Kallar metoden graveyard
+                    Graveyard();
                 }
                 //Om LagB har slut på fighters, men lag A har fler än 0 vinner lag B
                 else if (NextFighterB.Count == 0 && NextFighterA.Count > 0)
                 {
                     Console.WriteLine("Team A wins!");
-                    //INKAPSA DETTA SENARE
-                    Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
+                    //Kallar metoden graveyard
+                    Graveyard();
                 }
             }
+        }
+
+        //Metod för att printa ut vilken fighter som dog sist
+        static void Graveyard()
+        {
+            //Printar graveyard.pop
+            Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
         }
     }
 }
