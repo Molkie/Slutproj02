@@ -161,38 +161,48 @@ namespace SlutProj2020
                 Fighter fighter1 = NextFighterA.Dequeue();
                 Fighter fighter2 = NextFighterB.Dequeue();
 
-                while (fighter1.hp > 1 && fighter2.hp > 1)
+                //Definerar båda fighters hp genom att kalla metoden GetHP()
+                int hp1 = fighter1.GetHP();
+                int hp2 = fighter2.GetHP();
+
+                while (hp1 > 1 && hp2 > 1)
                 {
+                    //Definerar båda fighters hp genom att kalla metoden GetHP()
+                    hp1 = fighter1.GetHP();
+                    hp2 = fighter2.GetHP();
+                    //Definerar fighters namn genom att kalla metoden getName
+                    string name1 = fighter1.GetName();
+                    string name2 = fighter2.GetName();
                     //Skriver ut vilken runda det är och vilka fighters som slåss
-                    Console.WriteLine(fighter1.name + " vs " + fighter2.name);
+                    Console.WriteLine(name1 + " vs " + name2);
                     Console.WriteLine("Round: " + round);
                     //Fighters attackerar varandra genom att kalla metoden TakeDamage med parametern från fighterns specialattack
                     fighter1.TakeDamage(fighter2.Special());
                     fighter2.TakeDamage(fighter1.Special());
                     //Skriver ut skadan så att användaren vet vad som händer
-                    Console.WriteLine(fighter2.name + " attacks " + fighter1.name + " for " + fighter2.Special() + " damage! " + fighter1.name + " has " + fighter1.hp + " hp!");
-                    Console.WriteLine(fighter1.name + " attacks " + fighter2.name + " for " + fighter1.Special() + " damage! " + fighter2.name + " has " + fighter2.hp + " hp!");
+                    Console.WriteLine(name2 + " attacks " + name1 + " for " + fighter2.Special() + " damage! " + name1 + " has " + hp2 + " hp!");
+                    Console.WriteLine(name1 + " attacks " + name2 + " for " + fighter1.Special() + " damage! " + name2 + " has " + hp2 + " hp!");
 
                     //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
-                    if (fighter1.hp < 1 && fighter2.hp > 0)
+                    if (hp1 < 1 && hp2 > 0)
                     {
-                        Console.WriteLine(fighter1.name + " has died!");
+                        Console.WriteLine(name1 + " has died!");
                         //Lägger till den levande fightern (fighter2) längst bak i kön.
                         NextFighterB.Enqueue(fighter2);
                         //Lägger till den dödade fightern (fighter1) i stack graveyard.
                         graveyard.Push(fighter1);
                     }
                     //Om fighter2 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter1 tillbaka längst bak i kön.
-                    else if (fighter2.hp < 1 && fighter1.hp > 0)
+                    else if (hp2 < 1 && hp1 > 0)
                     {
-                        Console.WriteLine(fighter2.name + " has died!");
+                        Console.WriteLine(name2 + " has died!");
                         //Lägger till den levande fightern (fighter1) längst bak i kön.
                         NextFighterA.Enqueue(fighter1);
                         //Lägger till den dödade fightern (fighter2) i stack graveyard.
                         graveyard.Push(fighter2);
                     }
                     //Om båda fighters dör läggs båda till i graveyard, men ingen hamnar längst bak i kön.
-                    else if(fighter1.hp < 1 && fighter2.hp < 1)
+                    else if(hp1 < 1 && hp2 < 1)
                     {
                         Console.WriteLine("Both fighters has died!");
                         //Lägger till båda fighters i graveyard.
@@ -233,8 +243,8 @@ namespace SlutProj2020
         //Metod för att printa ut vilken fighter som dog sist
         static void Graveyard()
         {
-            //Printar graveyard.pop
-            Console.WriteLine("Last man to loose his life was " + graveyard.Pop().name);
+            //Printar namnet på fightern som senast dog (graveyard.pop)
+            Console.WriteLine("Last man to loose his life was " + graveyard.Pop().GetName());
         }
     }
 }

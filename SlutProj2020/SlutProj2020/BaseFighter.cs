@@ -9,12 +9,23 @@ namespace SlutProj2020
     class Fighter
     {
         //Namn
-        public string name;
+        protected string name;
         //Hälsa
-        public int hp = 10;
+        protected int hp = 10;
         //Power, kraft
         protected int pwr = 1;
 
+        //Metod som returnar fighterns namn
+        public string GetName()
+        {
+            return (name);
+        }
+
+        //Metod som returnerar hp.
+        public int GetHP()
+        {
+            return (hp);
+        }
 
         //Metod för fighterns specialattack
         public virtual int Special()
