@@ -14,30 +14,34 @@ namespace SlutProj2020
         public Wrestler()
         {
             //Sätter ett namn
-            name = "Max";
+            //Slumpar ett värde mellan 0 och längden av arrayen names, definerar namnet till det namn med motsvarande indexvärdet i arrayen names i klassen Fighter.
+            name = names[(generator.Next(0, names.Length))];
         }
         //public override för metoden Special. Här är fighterns specialattack.
         public override int Special()
         {
-            //Om hp är under 10
-            if(hp < 10)
+            //Skapar integern dmg och definerar den som värdet av pwr.
+            int dmg = pwr;
+            //Om hp är under eller lika med 10
+            if (hp <= 10)
             {
-                //Skapar integern dmg och definerar den som värdet av pwr.
-                int dmg = pwr;
-                //Lägger till ett slumpat tal mellan 0 - 2 per hp som fightern har kvar till variabeln dmg.
+                //For loop som körs för varge hp fightern  har kvar
                 for (int i = 0; i < hp; i++)
                 {
-                    //Lägger till ett slumpat tal mellan 0 - 2 till variabeln dmg.
-                     dmg += generator.Next(0, 3);
+                    //Kollar om dmg är under summan av pwr + hp.
+                    if(dmg > (pwr + hp))
+                    {
+                        //Lägger till ett slumpat tal mellan 0 - 2 till variabeln dmg.
+                        dmg += generator.Next(0, 3);
+                    }
                 }
                 //Returnerar värdet av dmg.
                 return (dmg);
             }
-            //Om fighterns hp är över 10 returneras fighterns variabel pwr gånger 4.
+            //Om fighterns hp är över 10
             else
             {
-                //Returnerar värdet av pwr * 4
-                return (pwr * 4);
+                return (dmg);
             }
         }
     }
