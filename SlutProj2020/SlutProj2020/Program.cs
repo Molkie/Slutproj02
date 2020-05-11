@@ -180,7 +180,7 @@ namespace SlutProj2020
                     fighter1.TakeDamage(fighter2.Special());
                     fighter2.TakeDamage(fighter1.Special());
                     //Skriver ut skadan så att användaren vet vad som händer
-                    Console.WriteLine(name2 + " attacks " + name1 + " for " + fighter2.Special() + " damage! " + name1 + " has " + hp2 + " hp!");
+                    Console.WriteLine(name2 + " attacks " + name1 + " for " + fighter2.Special() + " damage! " + name1 + " has " + hp1 + " hp!");
                     Console.WriteLine(name1 + " attacks " + name2 + " for " + fighter1.Special() + " damage! " + name2 + " has " + hp2 + " hp!");
 
                     //Om fighter1 dör printas ett meddelande ut som förmedlar detta, sedan läggs fighter2 tillbaka längst bak i kön.
