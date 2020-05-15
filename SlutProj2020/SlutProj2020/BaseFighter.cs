@@ -33,7 +33,7 @@ namespace SlutProj2020
             return (hp);
         }
 
-        //Metod för fighterns specialattack
+        //Metod för fighterns specialattack, denna metod overridas i subklasserna
         public virtual int Special()
         {
             //Returnerar värdet av fighters pwr
